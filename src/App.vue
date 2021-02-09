@@ -1,6 +1,13 @@
 <template lang="pug">
   #app
-    pm-home
+    section.section
+      nav.nav.has-shadow
+        .container
+          input.input.is-large(type="text", placeholder="Buscar canciones")
+          button.button.is-info.is-large Buscar
+          button.button.is-danger.is-large  
+            span.icon
+              i.fas.fa-times
 </template>
 
 <script>
@@ -22,4 +29,5 @@ export default {
 
 <style lang="scss">
 @import "./scss/main.scss";
+
 </style>
