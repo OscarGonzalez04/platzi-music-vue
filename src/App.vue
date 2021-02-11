@@ -20,17 +20,12 @@
       .container
         .columns.is-multiline
           .column.is-full {{ searchMessage }}
-          .column(v-for="track in tracks") {{ track.name }}
+          .column(v-for="track in tracks") 
+            | {{ track.name }} - {{ track.artists[0].name }}
 </template>
 
 <script>
-
-const tracks = [
-  { name: 'Muchacha', artist: 'Luis Alberto Spinetta' },
-  { name: 'Hoy aca en el baile', artist: 'El Pepo' },
-  { name: 'I was made for loving you', artist: 'Kiss' }
-];
-
+import platziMusicServices from "./services/platziMusicServices";
 import PmHome from "./components/layout/PmHome.vue"
 
 export default {
@@ -46,12 +41,21 @@ export default {
   },
   computed:{
     searchMessage(){
-      return `Encontrador : ${this.tracks.length}`
+      return `Encontrados : ${this.tracks.length}`
     }
   },
   methods:{
     search(){
-      this.tracks = tracks;
+
+      if(!this.searchQuery){
+        return;
+      }
+
+      platziMusicServices.search(this.searchQuery).then((response)=>{
+        //console.log("Tracks: ", response);
+        this.tracks = response.tracks.items;
+      })  
+      .catch(console.log);
     }
   }
 }

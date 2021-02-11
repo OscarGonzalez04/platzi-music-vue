@@ -2,8 +2,8 @@ import axios from 'axios';
 import configService from "./config.js";
 
 export default {
-    getEvents(q, type) {
-        return this.api().get('/search', {q, type} )
+    search(q, type="track") {
+        return this.api().get('/search',{ params: {q, type} }).then(response => response.data)
     },
 
     api() {
